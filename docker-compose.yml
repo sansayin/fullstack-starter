@@ -5,22 +5,21 @@ services:
     restart: always
     build: ./frontend
     ports:
-      - ${PORT}:${PORT}
+      - ${VPORT}:${VPORT}
     depends_on:
-      - db
-    volumes:
-    - frontend:/usr/src/app
+      - db 
+    networks: [ "microservices" ]
+
 
   backend:
     container_name: backend
     restart: always
     build: ./backend 
     ports:
-      - ${GOPORT}:${GOPORT}
+      - ${GPORT}:${GPORT}
     depends_on:
       - db
-    volumes:
-      - backend:/user/src/app 
+    networks: [ "microservices" ]
 
   db:
     container_name: postgres
@@ -32,8 +31,12 @@ services:
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
+    networks: [ "microservices" ]
  
 volumes: 
  data: {}
  frontend: {}
  backend: {}
+networks:
+  microservices:
+    name: microservices

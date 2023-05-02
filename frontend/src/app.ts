@@ -26,6 +26,6 @@ app.get("/test", (req: Request, res: Response, next: NextFunction) => {
   res.send("hi");
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running at ${process.env.PORT}`);
+app.listen(process.env.VPORT, () => {
+  console.log(`Server is running at ${process.env.VPORT}`);
 });
