@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  frontend:
+    container_name: frontend 
+    restart: always
+    build: ./frontend
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - db
+    volumes:
+    - frontend:/usr/src/app
+
+  backend:
+    container_name: backend
+    restart: always
+    build: ./backend 
+    ports:
+      - ${GOPORT}:${GOPORT}
+    depends_on:
+      - db
+    volumes:
+      - backend:/user/src/app 
+
+  db:
+    container_name: postgres
+    image: postgres
+    ports:
+      - '5433:${DB_PORT}'
+    volumes:
+      - data:/data/db
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+ 
+volumes: 
+ data: {}
+ frontend: {}
+ backend: {}
